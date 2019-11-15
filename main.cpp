@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 
 #define CHAR_SIZE 128
 
@@ -6,14 +7,12 @@ class TrieNode
 {
 public:
     bool is_node;
-    TrieNode* children[CHAR_SIZE];
+    std::map<char,TrieNode*> children;
 
     TrieNode()
     {
         this->is_node = false;
 
-        for (int i = 0; i < CHAR_SIZE; i++)
-            this->children[i] = nullptr;
     }
 
     void insert(std::string palabra)
@@ -92,8 +91,8 @@ public:
     }
     bool haveChildren(TrieNode const* curr)
     {
-        for (int i = 0; i < CHAR_SIZE; i++)
-            if (curr->children[i])
+        for (auto it = children.begin(); it != children.end(); it++)
+            if ((*it).second)
                 return true;
 
         return false;
